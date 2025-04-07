@@ -1,0 +1,5 @@
+flask
+flask-session
+google-genai
+python-dotenv
+gunicorn

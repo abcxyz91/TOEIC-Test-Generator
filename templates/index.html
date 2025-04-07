@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    TOEIC Mock Test Generator
+{% endblock %}
+
+{% block content %}
+    <div class="bg-white p-8 rounded-xl shadow-lg text-center max-w-2xl mx-auto animate-fade-in">
+        <h1 class="text-4xl font-bold text-blue-600 mb-4">TOEIC Mock Test! <span role="img" aria-label="party popper" class="inline-block animate-bounce-subtle">🎉</span></h1>
+        <p class="text-lg text-gray-700 mb-6 text-left">Hello Guest!</p>
+        <p class="text-lg text-gray-700 mb-6 text-left">Are you ready to test your English grammar and reading skills?</p>
+
+        <div class="grid grid-cols-2 gap-6 mb-8">
+            <form id="grammar-test-form" action="/grammar_test" method="get" class="w-full">
+                <button id="grammar-test-button" type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-6 px-8 rounded-xl text-xl transition duration-300 shadow-md hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2">
+                    <span class="button-text">Grammar Test!</span>
+                    <span role="img" aria-label="pencil" class="text-2xl">📝</span>
+                    <span class="loader hidden"></span>
+                </button>
+            </form>
+
+            <form id="reading-test-form" action="/reading_test" method="get" class="w-full">
+                <button id="reading-test-button" type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-6 px-8 rounded-xl text-xl transition duration-300 shadow-md hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2">
+                    <span class="button-text">Reading Test!</span>
+                    <span role="img" aria-label="glasses" class="text-2xl">👓</span>
+                    <span class="loader hidden"></span>
+                </button>
+            </form>
+        </div>
+
+        <p class="mt-4 text-gray-600">Or, log in to track your progress and see your test history!</p>
+        <div class="mt-4">
+             <a href="{{ url_for('login') }}" class="text-blue-500 hover:text-blue-700 font-semibold underline animate-wiggle-hover inline-block">
+                 Login Here
+             </a>
+             <span class="mx-2 text-gray-400">|</span>
+             <a href="{{ url_for('register') }}" class="text-blue-500 hover:text-blue-700 font-semibold underline animate-wiggle-hover inline-block">
+                 Register an Account
+             </a>
+        </div>
+    </div>
+{% endblock %}

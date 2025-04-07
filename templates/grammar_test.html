@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Take the Test - TOEIC Grammar Test
+{% endblock %}
+
+<!-- 
+Display the current question number starting from 1
+Format each answer name as answers[0], answers[1], answers[2], etc. when submitting the form 
+Assign an id to each radio button, follow the format q1-1, q1-2 for labeling and web accessibility 
+-->
+
+{% block content %}
+    <h1 class="text-3xl font-bold text-center text-blue-700 mb-6">TOEIC Grammar Mock Test <span role="img" aria-label="thinking face">🤔</span></h1>
+    <p class="text-center text-gray-600 mb-8">Read each question carefully and choose the best answer.</p>
+
+    <form action="/grammar_test" method="post" class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-lg space-y-8">
+        {% for item in questions %}
+            {% set question_num = loop.index0 %}
+            <div class="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                   <span class="text-blue-600 font-bold">Question {{ question_num + 1 }}:</span> {{ item.question }}
+                </h3>
+                <div class="space-y-3 pl-4">
+                    {% for choice in item.choices %}
+                        <div class="flex items-center">
+                            <input type="radio"
+                                   name="answers[{{ question_num }}]"
+                                   value="{{ choice }}"
+                                   id="q{{ question_num + 1 }}-{{ loop.index }}"
+                                   required
+                                   class="mr-3 h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 cursor-pointer">
+                            <label for="q{{ question_num + 1 }}-{{ loop.index }}" class="text-lg text-gray-700 cursor-pointer hover:text-blue-700">
+                                {{ choice }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="text-center pt-6">
+            <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 shadow-md transform hover:scale-105">
+                Submit Answers <span role="img" aria-label="check mark">✅</span>
+            </button>
+        </div>
+    </form>
+{% endblock %}

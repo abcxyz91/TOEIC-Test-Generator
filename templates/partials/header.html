@@ -1,0 +1,32 @@
+<header class="bg-white shadow-md sticky top-0 z-10">
+    <div class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+            <div>
+                <a href="{{ url_for('home') }}" class="text-2xl font-bold text-blue-600 hover:text-blue-800 transition duration-300">
+                    <span role="img" aria-label="pencil">✏️</span> TOEIC Grammar Test
+                </a>
+            </div>
+
+            <nav>
+                <ul class="flex space-x-4 items-center">
+                    <li>
+                        {% if session.get("user_id") %}
+                            <form action="{{ url_for('logout') }}" method="post" class="inline">
+                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow">
+                                    Logout
+                                </button>
+                            </form>
+                        {% else %}
+                            <a href="{{ url_for('login') }}" class="text-gray-600 hover:text-blue-600 font-medium transition duration-300 mr-2">
+                                Login
+                            </a>
+                            <a href="{{ url_for('register') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow">
+                                Register
+                            </a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
