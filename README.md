@@ -1,7 +1,7 @@
-# TOEIC Grammar Test Generator 📝
+# TOEIC Mock Test Generator 📝
 
 ## 📌 Tổng Quan
-TOEIC Grammar Test Generator là một ứng dụng web được xây dựng bằng Flask, cho phép người dùng luyện tập ngữ pháp và đọc hiểu tiếng Anh theo định dạng TOEIC. Ứng dụng sử dụng Gemini AI để tạo ra các câu hỏi ngẫu nhiên và độc đáo.
+TOEIC Mock Test Generator là một ứng dụng web được xây dựng bằng Flask, cho phép người dùng luyện tập ngữ pháp và đọc hiểu tiếng Anh theo định dạng TOEIC. Ứng dụng sử dụng Gemini AI để tạo ra các câu hỏi ngẫu nhiên và độc đáo.
 
 ## ✨ Tính Năng Chính
 - Tạo đề thi ngữ pháp TOEIC với 10 câu hỏi
@@ -10,6 +10,9 @@ TOEIC Grammar Test Generator là một ứng dụng web được xây dựng b�
 - Hệ thống đăng nhập/đăng ký để theo dõi tiến độ, bookmark câu hỏi (update sau)
 - Giao diện thân thiện, responsive với người dùng
 - Hỗ trợ hiển thị kết quả và phân tích bài làm
+
+## 🌐 Web Demo
+[TOEIC Mock Test Generator v0.8 - hosted by Render](https://toeic-test-generator.onrender.com/)
 
 ## 🛠 Công Nghệ Sử Dụng
 - **Backend**: Python, Flask
