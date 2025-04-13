@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard - TOEIC Mock Test
+{% endblock %}
+
+{% block content %}
+<div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto animate-fade-in">
+    <!-- Welcome Section -->
+    <div class="mb-8 text-center">
+        <h1 class="text-4xl font-bold text-blue-600 mb-4">Welcome back, {{ username }}! <span role="img" aria-label="wave" class="inline-block animate-bounce-subtle">👋</span></h1>
+        <p class="text-lg text-gray-600">Your current streak: <span class="font-bold text-green-500">{{ streak }} days</span></p>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Test Options -->
+        <div class="space-y-4">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Take a Test</h2>
+            <form id="dashboard-grammar-form" action="/grammar_test" method="get" class="w-full">
+                <button id="dashboard-grammar-button" type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition duration-300 shadow-md hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2">
+                    <span class="button-text">Grammar Test</span>
+                    <span role="img" aria-label="pencil" class="text-xl">📝</span>
+                    <span class="loader hidden">⏳</span>
+                </button>
+            </form>
+            <form id="dashboard-reading-form" action="/reading_test" method="get" class="w-full">
+                <button id="dashboard-reading-button" type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-xl transition duration-300 shadow-md hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2">
+                    <span class="button-text">Reading Test</span>
+                    <span role="img" aria-label="glasses" class="text-xl">👓</span>
+                    <span class="loader hidden">⏳</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- User Actions -->
+        <div class="space-y-4">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
+            <a href="{{ url_for('show_favorites') }}" class="block w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-6 rounded-xl transition duration-300 shadow-md hover:shadow-xl transform hover:scale-105 text-center">
+                <span>View Favorites</span>
+                <span role="img" aria-label="star" class="text-xl ml-2">⭐</span>
+            </a>
+            <a href="{{ url_for('change_password') }}" class="block w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-6 rounded-xl transition duration-300 shadow-md hover:shadow-xl transform hover:scale-105 text-center">
+                <span>Change Password</span>
+                <span role="img" aria-label="lock" class="text-xl ml-2">🔒</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Logout Button -->
+    <div class="text-center">
+        <form action="{{ url_for('logout') }}" method="post">
+            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                Logout
+                <span role="img" aria-label="logout" class="ml-2">🚪</span>
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

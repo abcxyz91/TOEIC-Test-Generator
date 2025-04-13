@@ -10,6 +10,7 @@ TOEIC Mock Test Generator là một ứng dụng web được xây dựng bằng
 - Hệ thống đăng nhập/đăng ký để theo dõi tiến độ, bookmark câu hỏi (update sau)
 - Giao diện thân thiện, responsive với người dùng
 - Hỗ trợ hiển thị kết quả và phân tích bài làm
+- Bằng việc thay đổi prompts.py, có thể chuyển web app này từ tạo câu hỏi TOEIC sang JLPT, TOPIK, HSK...
 
 ## 🌐 Web Demo
 [TOEIC Mock Test Generator v0.8 - hosted by Render](https://toeic-test-generator.onrender.com/)

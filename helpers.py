@@ -4,7 +4,8 @@ from google.genai import errors
 from dotenv import load_dotenv, find_dotenv
 from flask import session, redirect, flash
 from functools import wraps
-import os, json
+import os, json, sqlite3
+from datetime import datetime, timedelta
 from prompts import grammar_prompt, reading_prompt
 
 # Configuration Constants
@@ -16,6 +17,10 @@ MAX_READING_HISTORY_QUESTIONS = 20 # Max reading questions to keep in session hi
 
 # Find and load environment variables
 _ = load_dotenv(find_dotenv())
+
+# Setup database connection, create database file if it doesn't exist
+db_file = "database.db"
+conn = None
 
 # Set up model
 MODEL = "gemini-2.0-flash"
@@ -128,13 +133,12 @@ def generate_reading_questions():
 
                 # Generate questions, parse the JSON response, clean \n, json XML tag or Markdown tag if found
                 response = get_response(reading_prompt)
-                print("Raw response:", response)
                 response = response.strip()
                 if response.startswith("<json>") and response.endswith("</json>"):
                     response = response[len("<json>"):-len("</json>")].strip()
                 if response.startswith("```json") and response.endswith("```"):
                     response = response[len("```json"):-len("```")].strip()
-                questions = json.loads(response, strict=False)
+                questions = json.loads(response, strict=False) # force strict=False to handle any unexpected formatting
 
                 # Check for duplicates against previous questions
                 for q in questions["READING_DATA"]:
@@ -192,3 +196,58 @@ def login_required(func):
             return redirect("/login")
         return func(*args, **kwargs)
     return decorated_function
+
+def get_username(user_id):
+    try:
+        conn = sqlite3.connect(db_file)
+        with conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT username FROM users WHERE id = ?", (user_id,))
+            result = cursor.fetchone()
+            if result:
+                return result[0]
+            else:
+                return "Guest"
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+        return "Guest"
+    finally:
+        conn.close()
+
+def update_user_streak(user_id):
+    try:
+        conn = sqlite3.connect(db_file)
+        with conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT streak, last_test_date FROM users WHERE id = ?", (user_id,))
+            row = cursor.fetchone()
+            if not row:
+                return
+            
+            current_streak, last_test_date = row
+            today = datetime.now().date()
+
+            if last_test_date:
+                last_date = datetime.strptime(last_test_date, "%Y-%m-%d").date()
+                yesterday = today - timedelta(days=1)
+                if last_date == yesterday:
+                    """User took a test today and yesterday, increment streak"""
+                    new_streak = current_streak + 1
+                elif last_date == today:
+                    """User already took a test today, no change"""
+                    new_streak = current_streak
+                else:
+                    """User didn't take a test yesterday, reset streak"""
+                    new_streak = 1
+            else:
+                """User has never taken a test, set streak to 1"""
+                new_streak = 1
+            
+            cursor.execute("UPDATE users SET streak = ?, last_test_date = ? WHERE id = ?", (new_streak, today.strftime("%Y-%m-%d"), user_id))
+            
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+    finally:
+        conn.close()

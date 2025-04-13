@@ -48,6 +48,16 @@ document.addEventListener('DOMContentLoaded', function() {
          loadingText: 'Generating...'
     });
 
+    setupButtonLoading('dashboard-grammar-form', 'dashboard-grammar-button', {
+        iconSelector: '[aria-label="pencil"]',
+        loadingText: 'Generating...'
+    });
+    
+    setupButtonLoading('dashboard-reading-form', 'dashboard-reading-button', {
+        iconSelector: '[aria-label="glasses"]',
+        loadingText: 'Generating...'
+    });
+
 
     // --- Subtle animation for flash messages ---
     const flashMessages = document.querySelectorAll('[role="alert"].animate-fade-in'); // Target only alerts meant to fade in
@@ -112,4 +122,48 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+});
+
+// Add to favorites function
+document.addEventListener('DOMContentLoaded', function() {
+    const favoriteButtons = document.querySelectorAll('.favorite-btn');
+    
+    favoriteButtons.forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const data = {
+                question: JSON.parse(this.dataset.question),
+                choices: JSON.parse(this.dataset.choices),
+                correct_answer: JSON.parse(this.dataset.correct),
+                explanation: JSON.parse(this.dataset.explanation)
+            };
+            
+            try {
+                const response = await fetch('/favorite', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                // Changed this condition to check for response message
+                if (response.ok) {
+                    // Toggle the heart icon
+                    this.classList.toggle('text-red-500');
+                    const svg = this.querySelector('svg');
+                    svg.setAttribute('fill', svg.getAttribute('fill') === 'none' ? 'currentColor' : 'none');
+                    
+                    // Optional: Show feedback to user
+                    console.log(result.message);
+                } else {
+                    throw new Error(result.error || 'Failed to update favorites');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to update favorites. Please try again.');
+            }
+        });
+    });
 });

@@ -24,6 +24,17 @@ Compare each choice with the user's answer (answers[0], answers[1], answers[2]) 
                     <h3 class="text-xl font-semibold text-gray-800 mb-4">
                        <span class="text-blue-600 font-bold">Question {{ question_num + 1 }}:</span> {{ item.question }}
                     </h3>
+                    <button 
+                        class="favorite-btn p-2 rounded-full hover:bg-gray-100 transition-colors {% if item.question in favorited_questions %}text-red-500{% endif %}"
+                        data-question="{{ item.question|tojson }}"
+                        data-choices="{{ item.choices|tojson }}"
+                        data-correct="{{ item.correct_answer|tojson }}"
+                        data-explanation="{{ item.explanation|tojson }}">
+                        <svg class="w-6 h-6" fill="{% if item.question in favorited_questions %}currentColor{% else %}none{% endif %}" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
                     <div class="space-y-3 pl-4 mb-4">
                         {% for choice in item.choices %}
                             {% set is_user_answer = user_answers[question_num] == choice %}
