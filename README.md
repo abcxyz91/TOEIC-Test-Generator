@@ -7,24 +7,28 @@ TOEIC Mock Test Generator là một ứng dụng web được xây dựng bằng
 - Tạo đề thi ngữ pháp TOEIC với 10 câu hỏi
 - Tạo đề thi đọc hiểu TOEIC với 3 đoạn văn
 - Giải thích chi tiết bằng tiếng Việt cho mỗi câu trả lời
-- Hệ thống đăng nhập/đăng ký để theo dõi tiến độ, bookmark câu hỏi (update sau)
+- Hệ thống đăng nhập/đăng ký tài khoản người dùng
+- Theo dõi chuỗi ngày làm bài liên tiếp (streak)
+- Lưu và quản lý câu hỏi yêu thích
+- Thay đổi mật khẩu tài khoản
 - Giao diện thân thiện, responsive với người dùng
-- Hỗ trợ hiển thị kết quả và phân tích bài làm
+- Hiển thị kết quả và phân tích bài làm chi tiết
 - Bằng việc thay đổi prompts.py, có thể chuyển web app này từ tạo câu hỏi TOEIC sang JLPT, TOPIK, HSK...
 
 ## 🌐 Web Demo
-[TOEIC Mock Test Generator v0.8 - hosted by Render](https://toeic-test-generator.onrender.com/)
+[TOEIC Mock Test Generator v1.0 - hosted by Render](https://toeic-test-generator.onrender.com/)
 
 ## 🛠 Công Nghệ Sử Dụng
 - **Backend**: Python, Flask
 - **Frontend**: HTML, TailwindCSS, JavaScript
 - **AI**: Google Gemini 2.0 Flash
-- **Cơ sở dữ liệu**: Flask-Session (file system) & SQLite3 (update sau)
+- **Cơ sở dữ liệu**: SQLite3, Flask-Session
 
 ## 📋 Yêu Cầu Hệ Thống
 - Python 3.8+
 - Google Gemini API key (đăng kí free từ [Google AI Studio](https://aistudio.google.com/apikey))
-- Trình duyệt web
+- SQLite3
+- Trình duyệt web hiện đại
 
 ## ⚙️ Cài Đặt
 1. Clone repository:
@@ -50,13 +54,25 @@ GEMINI_API_KEY=your_api_key
 FLASK_SECRET_KEY=your_secret_key
 ```
 
-5. Chạy ứng dụng:
+5. Khởi tạo cơ sở dữ liệu:
+```bash
+# Database sẽ tự động được tạo khi chạy ứng dụng lần đầu
+```
+
+6. Chạy ứng dụng:
 ```bash
 python app.py
 ```
 
 ## 🌐 Truy Cập Ứng Dụng
 Mở trình duyệt và truy cập: http://localhost:5000
+
+## 🚀 Tính Năng Người Dùng
+- **Đăng ký/Đăng nhập**: Tạo tài khoản để lưu trữ tiến độ học tập
+- **Streak**: Theo dõi chuỗi ngày làm bài liên tiếp
+- **Yêu thích**: Lưu các câu hỏi yêu thích để ôn tập sau
+- **Quản lý tài khoản**: Thay đổi mật khẩu, xem lịch sử làm bài
+- **Dashboard**: Xem tổng quan tiến độ và thành tích
 
 ## 👥 Đóng Góp
 Mọi đóng góp đều được hoan nghênh! Vui lòng:
@@ -73,4 +89,5 @@ Dự án này được phân phối dưới giấy phép MIT. Xem LICENSE để 
 ## 🙏 Ghi Nhận
 - Google Gemini API cho việc tạo câu hỏi
 - TailwindCSS cho thiết kế giao diện
-
+- SQLite3 cho cơ sở dữ liệu
+- Flask và các extension đi kèm

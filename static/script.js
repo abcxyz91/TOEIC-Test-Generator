@@ -122,22 +122,29 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});
 
-// Add to favorites function
-document.addEventListener('DOMContentLoaded', function() {
+    // --- Add to favorites function ---
     const favoriteButtons = document.querySelectorAll('.favorite-btn');
     
     favoriteButtons.forEach(btn => {
-        btn.addEventListener('click', async function() {
-            const data = {
-                question: JSON.parse(this.dataset.question),
-                choices: JSON.parse(this.dataset.choices),
-                correct_answer: JSON.parse(this.dataset.correct),
-                explanation: JSON.parse(this.dataset.explanation)
-            };
+        btn.addEventListener('click', async function(e) {
+            e.preventDefault(); // Prevent any default action
+            
+            // Log that the button was clicked (for debugging)
+            console.log('Favorite button clicked');
             
             try {
+                // Parse the data attributes directly without JSON.parse
+                // This helps avoid issues if the data is already parsed or has special characters
+                const data = {
+                    question: this.getAttribute('data-question'),
+                    choices: this.getAttribute('data-choices'),
+                    correct_answer: this.getAttribute('data-correct'),
+                    explanation: this.getAttribute('data-explanation')
+                };
+                
+                console.log('Sending data:', data);
+                
                 const response = await fetch('/favorite', {
                     method: 'POST',
                     headers: {
@@ -147,16 +154,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 const result = await response.json();
+                console.log('Response received:', result);
                 
-                // Changed this condition to check for response message
                 if (response.ok) {
-                    // Toggle the heart icon
+                    // Toggle the heart icon's color and fill
                     this.classList.toggle('text-red-500');
                     const svg = this.querySelector('svg');
-                    svg.setAttribute('fill', svg.getAttribute('fill') === 'none' ? 'currentColor' : 'none');
+                    const currentFill = svg.getAttribute('fill');
+                    svg.setAttribute('fill', currentFill === 'none' ? 'currentColor' : 'none');
                     
-                    // Optional: Show feedback to user
-                    console.log(result.message);
+                    // Show feedback to user with a temporary message
+                    const feedbackMsg = document.createElement('div');
+                    feedbackMsg.className = 'absolute top-0 left-0 bg-blue-500 text-white px-2 py-1 rounded-md text-xs';
+                    feedbackMsg.style.transform = 'translateY(-100%)';
+                    feedbackMsg.textContent = result.message;
+                    this.style.position = 'relative';
+                    this.appendChild(feedbackMsg);
+                    
+                    // Remove feedback message after 2 seconds
+                    setTimeout(() => {
+                        feedbackMsg.remove();
+                    }, 2000);
                 } else {
                     throw new Error(result.error || 'Failed to update favorites');
                 }

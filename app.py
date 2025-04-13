@@ -4,7 +4,7 @@ from dotenv import load_dotenv, find_dotenv
 from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
-import os, sys, sqlite3
+import os, sys, sqlite3, ast
 from helpers import generate_grammar_questions, generate_reading_questions, validate_environment, login_required, get_username, update_user_streak
 
 # Validate environment variables
@@ -57,6 +57,14 @@ if not os.path.exists(db_file):
     """)
     conn.commit()
     conn.close()
+
+@app.template_filter('eval')
+def eval_filter(text):
+    """Convert string representation of list to actual list"""
+    try:
+        return ast.literal_eval(text)
+    except:
+        return []
 
 # Home page
 @app.route("/", methods=["GET"])
