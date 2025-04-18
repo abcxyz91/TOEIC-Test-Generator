@@ -33,7 +33,7 @@ TOEIC Mock Test Generator là một ứng dụng web được xây dựng bằng
 ## ⚙️ Cài Đặt
 1. Clone repository:
 ```bash
-git clone <repository-url>
+git clone <https://github.com/abcxyz91/TOEIC-Test-Generator>
 ```
 
 2. Tạo môi trường ảo:
@@ -71,8 +71,8 @@ Mở trình duyệt và truy cập: http://localhost:5000
 - **Đăng ký/Đăng nhập**: Tạo tài khoản để lưu trữ tiến độ học tập
 - **Streak**: Theo dõi chuỗi ngày làm bài liên tiếp
 - **Yêu thích**: Lưu các câu hỏi yêu thích để ôn tập sau
-- **Quản lý tài khoản**: Thay đổi mật khẩu, xem lịch sử làm bài
-- **Dashboard**: Xem tổng quan tiến độ và thành tích
+- **Quản lý tài khoản**: Thay đổi mật khẩu, xem lịch sử làm bài (update sau)
+- **Dashboard**: Xem tổng quan tiến độ và thành tích (update sau)
 
 ## 👥 Đóng Góp
 Mọi đóng góp đều được hoan nghênh! Vui lòng:
